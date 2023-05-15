@@ -1,0 +1,488 @@
+@import url('https://fonts.cdnfonts.com/css/barlow');
+
+html, body, div, span, applet, object,
+iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
+pre, a, abbr, acronym, address, big, cite,
+code, del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var, b,
+u, i, center, dl, dt, dd, ol, ul, li, fieldset,
+form, label, legend, table, caption, tbody,
+tfoot, thead, tr, th, td, article, aside,
+canvas, details, embed, figure, figcaption,
+footer, header, hgroup, menu, nav, output, ruby,
+section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+    font-family: 'Barlow', sans-serif;
+    color: #222629;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;}
+
+body {
+	line-height: 1;
+    height:100%;
+    background: #F3F2F7;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.35s ease-in-out, border-bottom-color 0.35s ease-in-out;
+    outline: 0;
+}
+
+a:hover {
+    color: #E27689;
+    border-bottom-color: rgba(255, 255, 255, 0);
+}
+
+.container-full{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    overflow: none;
+    height: 100vh;
+}
+
+.container{
+    width: 100%;
+    margin-top: 3em;
+    padding: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;    
+}
+
+header{
+    color: #222629;
+    background: #FFFFFF;
+    height:100%;
+    position: relative;
+    max-width: 250px;
+}
+
+.menu-toggle{
+    display: none;
+}
+
+
+#logo {
+    position: relative;
+    margin: 1.75em 1.5em 1.5em 1.5em;
+    min-height: 48px;
+    cursor: default;
+}
+
+#logo h1 {
+    text-align: center;
+    position: relative;
+    color: #222629;;
+    font-weight: 600;
+    font-size: 1.5em;
+    line-height: 1em;
+    margin-bottom: 1em;
+}
+
+.user{
+    width: 150px;
+    display: flex;
+    justify-content: space-centered;
+    align-items: center;
+    flex-direction: row;
+    margin: 0 auto;
+    font-weight: 500;
+    background-color:  #216396;
+    border-radius: 25px;
+    padding: 1em;
+}
+
+.user h3{
+    flex: 1;
+    text-align: center;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.logout:hover{
+    color: #e276cb;
+    border-bottom-color: rgba(255, 255, 255, 0);
+    transition: color 0.35s ease-in-out, border-bottom-color 0.35s ease-in-out;
+    outline: 0;
+}
+
+
+#logo .image {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+#nav ul {
+    width: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+#nav ul li {
+    text-align: left;
+    width: 200px;
+}
+
+#nav ul li a {
+    display: block;
+    padding: 0.7em 1.5em 0.7em 1.5em;
+    color: #222629;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 600;
+    outline: 0;
+    border: 0;
+    text-align: center;
+}
+
+#nav ul li a:before {
+    position: absolute;
+    left: 0;
+    color: #41484c;
+    text-align: left;
+    width: 1.25em;
+    line-height: 1.75em;
+}
+
+#nav ul li a:hover {
+    color: #00B074;
+    background: rgba(0, 176,116, 0.15);;
+    transition: color 0.35s ease-in-out, background 0.15s ease-in-out;
+    border-radius: 25px;
+}
+
+/* STATS */
+
+#stats {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.stat-item {
+    width: 23%;
+    min-width: 174px;
+    height: 150px;
+    background-color: #FFFFFF;
+    color: #000;
+    border-radius: 25px;
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: flex-end;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    box-shadow: 1px 1px 4px 1px rgba(133, 133, 148, 1);
+}
+
+.stat-item i{
+    font-size: 4em;
+    display: block;
+    margin: 0 auto;
+    color:#00B074;
+}
+
+.stat-item span{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.stat-item h2{
+    font-weight: 700;
+    font-size: 1.5em;
+    color: #000;
+}
+
+.stat-item h4{
+    font-weight:500;
+    font-size: 1em;
+}
+
+/* Chart */
+
+.container #main-chart {
+    background-color: #FFFFFF;
+}
+
+
+/* TABLE */
+.table-list{
+    width: 90%;
+}
+.container  #table-stats {
+    padding: 2em;
+    background-color: #FFFFFF;
+    justify-content: flex-start!important;
+}
+
+/* table {
+    width: 100%;
+    text-align: left;
+}
+
+table tbody tr:nth-child(2n+2) {
+    background: #f4f4f4;
+}
+
+table td {
+    padding: 0.5em 1em 0.5em 1em;
+}
+
+table th {
+    text-align: left;
+    padding: 0.5em 1em 0.5em 1em;
+    color: rgb(0, 0, 0);
+}
+
+table thead tr {
+    color: #fff;
+}
+
+table thead tr th{
+    background-color: rgba(211, 211, 211, 0.774);
+    border-radius: 25px;
+}
+
+table tfoot {
+    background: #eee;
+} */
+
+
+#table-stats h1{
+    color: #000;
+    font-size: 1.5em;
+    padding: 0.25em;
+    font-weight: 700;
+}
+
+/* #total-row{
+    background-color: #00B074;
+} */
+#t-stats_length{
+    display: none!important;
+}
+
+/* ADD BUDGET */
+.container .add-item {
+    padding: 2em;
+    background-color: #FFFFFF;
+    position: relative;
+    justify-content: flex-start!important;
+    width: 80%;
+}
+
+#result {
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 2em;
+}
+
+#budgetForm{
+    gap: 1em;
+}
+
+/* LOGIN */
+
+.main-login{
+	background-image: url("assets/img/overlay.png"), linear-gradient(45deg, #6530ff 15%, #5f4d93 85%);
+    display: flex;
+    justify-content: center; /* center horizontally */
+    align-items: center; /* center vertically */
+    }
+
+#login{
+    background-color: rgb(244, 244, 244, 0.7);;
+    border-radius: 25px;
+    padding: 2em;
+    width: 300px;
+
+}
+
+#login h2{
+    color: #000;
+    font-size: 1.2em;
+}
+
+#login form{
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* center horizontally */
+    align-items: center; /* center vertically */
+}
+
+#login input{
+    border-radius: 10px;
+    padding: 0.8em;
+    margin: 0.5em;
+}
+
+.button{
+    margin: 1em;
+    cursor: pointer;
+    border: 0;
+    border-radius: 4px;
+    font-weight: 600;
+    margin: 0 10px;
+    width: 100px;
+    padding: 10px 0;
+    box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
+    transition: 0.4s;
+}
+
+.button:hover {
+    color: white;
+    box-shadow: 0 0 20px rgba(104, 85, 224, 0.6);
+    background-color: rgba(104, 85, 224, 1);
+    width: 100px;
+  }
+  
+.submit-element{
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.register {
+    color: rgb(0, 0, 0);
+    align-items: center;
+    text-align: center;
+    font-weight: 500;
+  }
+
+form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px;
+  }
+
+
+input[type="text"], input[type="number"], input[type="password"], select{
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 300px;
+}
+
+input[type="submit"] {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+
+@media only screen and (min-width: 960px){
+    .container{
+        display: flex;
+        align-content: space-around;
+        justify-content: center;
+        row-gap: 2em;
+    }
+    #stats{
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+    .container #main-chart {
+        padding: 2em;
+        min-width: 70%;
+    }
+    #myChart{
+        height: 350px;
+    }
+
+}
+  
+@media only screen and (max-width: 960px) {
+    .container-full{
+      transform: translateX(-230px);
+      width: calc(100% + 250px);
+      transition: transform 0.2s ease-out;
+    }
+
+    .menu-toggle {
+      display: block;
+      position: fixed;
+      cursor: pointer;
+      font-size: 2em;
+      left: 260px;
+      top: 15px;
+    }
+}
+
+@media (max-width:480px){
+    .container{
+        width: 100vw;
+        row-gap: 2em;
+    }
+    #stats{
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .stat-item h2{
+        font-size: 1.2em;
+    }
+
+    .container #main-chart{
+        position: relative;
+    }
+
+    #myChart{
+        max-width: 300px;
+    }
+
+    .container #table-stats{
+        max-width: 350px;
+        padding: 1em;
+        overflow-y: auto;
+    }
+    #budgetForm{
+        flex-direction: column;
+    }
+
+    .stat-item{
+        min-width: 160px;
+    }
+
+    .stat-item span{
+        font-size: 0.8em;
+    }
+}

@@ -1,0 +1,51 @@
+{% extends 'budget/header.html' %}
+
+{% block content %}
+<div class="flex flex-col justify-center items-center">
+  <h1>{% if view.action == 'create' %}Create a new{% else %}Edit{% endif %} Transaction</h1>
+</br>
+  <form class="space-y-5" method="post">
+    {% csrf_token %}
+    <div class="form-control">
+      <label class="input-group">
+        <span>Name</span>
+        {{form.name}}
+      </label>
+    </div>
+    <div class="form-control">
+      <label class="input-group input-group-lg l	">
+        <span>Category</span>
+          {{form.category }}
+    </label>
+    <label for="my-modal-3" class="btn">open modal</label>
+    </div>
+    <div class="form-control">
+      <label class="input-group input-group-lg">
+        <span>Tags</span>
+          {{form.tags}}
+    </label>
+    </div>
+    <div class="form-control">
+      <label class="input-group">
+        <span>Price</span>
+        {{form.amount}}
+        <span>Zł</span>
+      </label>
+    </div>
+    <input class="btn btn-success btn-wide w-full" type="submit" value="{% if view.action == 'create' %}Create{% else %}Save{% endif %}">
+  </form>
+</br>
+  <a class="btn btn-success btn-wide" href="{% url 'transaction_list' %}">Back to the transaction list</a>
+</div>
+<!-- The button to open modal -->
+
+
+<!-- Put this part before </body> tag -->
+<input type="checkbox" id="my-modal-3" class="modal-toggle" />
+<div class="modal">
+  <div class="modal-box relative">
+    <label for="my-modal-3" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+    {{form.new_category }}
+  </div>
+</div>
+{% endblock %}
