@@ -1,11 +1,11 @@
 {% extends 'budget/header.html' %}
 
 {% block content %}
-  <h1>Delete "{{ object }}"?</h1>
+  <h1>Delete "{{ transaction }}"?</h1>
   <form method="post">
     {% csrf_token %}
     <p>Are you sure you want to delete this transaction?</p>
     <input type="submit" value="Yes, delete it">
   </form>
-  <a href="{% url 'transaction_detail' pk=object.pk %}">Cancel</a>
+  <a href="{% url 'transaction_detail' pk=transaction.pk %}">Cancel</a>
 {% endblock %}

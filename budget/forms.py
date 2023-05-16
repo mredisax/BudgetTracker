@@ -11,13 +11,15 @@ class TransactionForm(forms.ModelForm):
 
     class Meta:
         model = Transaction
-        fields = ['name', 'category', 'account', 'amount','tags']
+        fields = ['name', 'category', 'amount','tags']
         widgets = {'tags': forms.CheckboxSelectMultiple}
+
 
 class TagForm(forms.ModelForm):
     class Meta:
         model = TransactionTag
         fields = ['name']
+
 
 class CategoryForm(forms.ModelForm):
     class Meta:

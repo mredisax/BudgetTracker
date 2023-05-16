@@ -31,29 +31,25 @@ class TransactionDetailView(View):
 class TransactionCreateView(View):
     template_name = 'budget/transaction_form.html'
 
-    # @login_required
     def get(self, request):
-        form = TransactionForm(request.user)
-        return render(request, self.template_name, {'form': form, 'action': 'Create'})
+        form = TransactionForm(self.request.user)
+        return render(request, self.template_name, {'form': form, 'action': 'create'})
 
-    # @login_required
+    # @require_POST
     def post(self, request):
         form = TransactionForm(request.user, request.POST)
+        account = Account.objects.get(owner=request.user)
         if form.is_valid():
+            print("valid")
             transaction = form.save(commit=False)
-            new_category_name = form.cleaned_data.get('new_category')
-            if new_category_name:
-                new_category = TransactionCategory.objects.create(name=new_category_name)
-                transaction.category = new_category
-            else:
-                transaction.category = form.cleaned_data['category']
-            transaction.account = form.cleaned_data['account']  
-            transaction.owner = request.user
+            transaction.account = account
+            print(transaction.account)
             transaction.save()
             form.save_m2m()
             return redirect('transaction_detail', pk=transaction.pk)
-        return render(request, self.template_name, {'form': form, 'action': 'Create'})
-
+        else:
+            print("no valid")
+        return render(request, self.template_name, {'form': form, 'action': 'create'})
 
 class TransactionEditView(View):
     template_name = 'budget/transaction_form.html'
@@ -62,9 +58,10 @@ class TransactionEditView(View):
     def get(self, request, pk):
         transaction = get_object_or_404(Transaction, pk=pk)
         form = TransactionForm(self.request.user, instance=transaction)
-        return render(request, self.template_name, {'form': form, 'action': 'Edit'})
+        return render(request, self.template_name, {'form': form, 'action': 'edit'})
 
     # @login_required
+    @require_POST
     def post(self, request, pk):
         transaction = get_object_or_404(Transaction, pk=pk)
         form = TransactionForm(request.user, request.POST, instance=transaction)
@@ -75,12 +72,14 @@ class TransactionEditView(View):
             transaction.save()
             form.save_m2m()
             return redirect('transaction_detail', pk=transaction.pk)
-        return render(request, self.template_name, {'form': form, 'action': 'Edit'})
-
+        return render(request, self.template_name, {'form': form, 'action': 'edit'})
 
 class TransactionDeleteView(View):
     # @login_required
-
+    template_name = 'budget/transaction_confirm_delete.html'
+    def get(self, request, pk):
+        transaction = Transaction.objects.get(pk=pk)
+        return render(request, self.template_name, {'transaction': transaction})
     def post(self, request, pk):
         transaction = get_object_or_404(Transaction, pk=pk)
         transaction.delete()
