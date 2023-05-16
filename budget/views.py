@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.views.decorators.http import require_POST
 from .models import Transaction, Account, TransactionCategory, TransactionTag
-from .forms import TransactionForm
+from .forms import TransactionForm, TagForm, CategoryForm
 
 
 class TransactionListView(LoginRequiredMixin, View):
@@ -70,7 +70,7 @@ class TransactionEditView(View):
         form = TransactionForm(request.user, request.POST, instance=transaction)
         if form.is_valid():
             transaction = form.save(commit=False)
-            # transaction.owner = form.cleaned_data['account']
+            transaction.owner = form.cleaned_data['account']
             transaction.category = form.cleaned_data['category']
             transaction.save()
             form.save_m2m()
@@ -80,8 +80,32 @@ class TransactionEditView(View):
 
 class TransactionDeleteView(View):
     # @login_required
-    @require_POST
+
     def post(self, request, pk):
         transaction = get_object_or_404(Transaction, pk=pk)
         transaction.delete()
         return redirect('transaction_list')
+
+class TagCreateView(View):
+    template_name = 'budget/transaction_form_tag.html'
+    def get(self, request):
+        form = TagForm()
+        return render(request, self.template_name, {'form': form})
+    def post(self, request):
+        form = TagForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('transaction_create')
+        return render(request, self.template_name, {'form': form})
+
+class CategoryCreateView(View):
+    template_name = 'budget/transaction_form_category.html'
+    def get(self, request):
+        form = CategoryForm()
+        return render(request, self.template_name, {'form': form})
+    def post(self, request):
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('transaction_create')
+        return render(request, self.template_name, {'form': form})

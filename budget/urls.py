@@ -6,6 +6,8 @@ from .views import (
     TransactionCreateView,
     TransactionEditView,
     TransactionDeleteView,
+    TagCreateView,
+    CategoryCreateView,
 )
 
 urlpatterns = [
@@ -15,4 +17,6 @@ urlpatterns = [
     path('<int:pk>/edit/', TransactionEditView.as_view(), name='transaction_edit'),
     path('<int:pk>/delete/', TransactionDeleteView.as_view(), name='transaction_delete'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('tag/add/', TagCreateView.as_view(), name='add_tag'),
+    path('category/add/', CategoryCreateView.as_view(), name='add_category'),
 ]

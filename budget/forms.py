@@ -1,22 +1,25 @@
 from django import forms
-from .models import Transaction, TransactionCategory, Account
+from .models import Transaction, TransactionCategory, TransactionTag, Account
 
 class TransactionForm(forms.ModelForm):
-    new_category = forms.CharField(max_length=100, required=False)
-
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-
     def clean(self):
         cleaned_data = super().clean()
-        new_category = cleaned_data.get('new_category')
-
-        if not cleaned_data.get('category') and not new_category:
-            raise forms.ValidationError('Please select an existing category or enter a new one.')
         return cleaned_data
 
     class Meta:
         model = Transaction
-        fields = ['name', 'category', 'new_category', 'amount','tags']
+        fields = ['name', 'category', 'account', 'amount','tags']
         widgets = {'tags': forms.CheckboxSelectMultiple}
+
+class TagForm(forms.ModelForm):
+    class Meta:
+        model = TransactionTag
+        fields = ['name']
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = TransactionCategory
+        fields = ['name']
