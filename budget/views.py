@@ -1,10 +1,21 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
+from .statistics import BudgetStatistics, TransactionStatistics
 from django.views.decorators.http import require_POST
-from .models import Transaction, Account, TransactionCategory, TransactionTag
+from .models import Budget, Transaction, Account, TransactionCategory, TransactionTag
 from .forms import TransactionForm, TagForm, CategoryForm
 
+
+class BudgetView(View):
+    template_name = 'budget/budget_detail.html'
+
+    def get(self, request, budget_id):
+        budget = Budget.objects.get(id=budget_id)
+        context = {
+            'budget': budget,
+        }
+        return render(request, self.template_name, context)
 
 class TransactionListView(LoginRequiredMixin, View):
     template_name = 'budget/transaction_list.html'
@@ -16,7 +27,13 @@ class TransactionListView(LoginRequiredMixin, View):
         transactions = Transaction.objects.filter(
             account__owner=self.request.user
             ).prefetch_related('tags')
-        return render(request, self.template_name, {'transactions': transactions})
+        statistics = TransactionStatistics(transactions)
+        total_amount = statistics.calculate()
+        return render(request, self.template_name, {
+            'transactions': transactions, "total_amount": total_amount
+            })
+
+##TODO get_total_statistics
 
 
 class TransactionDetailView(View):
@@ -54,20 +71,17 @@ class TransactionCreateView(View):
 class TransactionEditView(View):
     template_name = 'budget/transaction_form.html'
 
-    # @login_required
     def get(self, request, pk):
         transaction = get_object_or_404(Transaction, pk=pk)
         form = TransactionForm(self.request.user, instance=transaction)
         return render(request, self.template_name, {'form': form, 'action': 'edit'})
 
-    # @login_required
-    @require_POST
     def post(self, request, pk):
         transaction = get_object_or_404(Transaction, pk=pk)
         form = TransactionForm(request.user, request.POST, instance=transaction)
         if form.is_valid():
             transaction = form.save(commit=False)
-            transaction.owner = form.cleaned_data['account']
+            # transaction.owner = form.cleaned_data['account']
             transaction.category = form.cleaned_data['category']
             transaction.save()
             form.save_m2m()
@@ -85,8 +99,21 @@ class TransactionDeleteView(View):
         transaction.delete()
         return redirect('transaction_list')
 
+
+class BudgetCreateView(View):
+    template_name = 'budget/transaction_simple_form.html'
+    def get(self, request):
+        form = TagForm()
+        return render(request, self.template_name, {'form': form})
+    def post(self, request):
+        form = TagForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('transaction_create')
+        return render(request, self.template_name, {'form': form})
+
 class TagCreateView(View):
-    template_name = 'budget/transaction_form_tag.html'
+    template_name = 'budget/transaction_simple_form.html'
     def get(self, request):
         form = TagForm()
         return render(request, self.template_name, {'form': form})
@@ -98,7 +125,7 @@ class TagCreateView(View):
         return render(request, self.template_name, {'form': form})
 
 class CategoryCreateView(View):
-    template_name = 'budget/transaction_form_category.html'
+    template_name = 'budget/transaction_simple_form.html'
     def get(self, request):
         form = CategoryForm()
         return render(request, self.template_name, {'form': form})

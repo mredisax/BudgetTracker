@@ -4,6 +4,6 @@
 <form method="POST" action="{% url 'add_category' %}">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit">Add Category</button>
+  <button type="submit">Add</button>
 </form>
 {% endblock %}

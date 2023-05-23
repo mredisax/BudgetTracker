@@ -6,6 +6,13 @@
 </br>
   <form class="space-y-5" method="post">
     {% csrf_token %}
+      <div class="form-control">
+      <label class="input-group input-group-lg">
+        <span>Budget</span>
+          {{form.budget}}
+
+    </label>
+    </div>
     <div class="form-control">
       <label class="input-group">
         <span>Name</span>
@@ -16,6 +23,7 @@
       <label class="input-group input-group-lg">
         <span>Category</span>
           {{form.category }}
+
     </label>
     </div>
     <div class="form-control">

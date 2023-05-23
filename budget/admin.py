@@ -1,10 +1,18 @@
 from django.contrib import admin
-from .models import Transaction, Account, TransactionCategory, TransactionTag
+from .models import Budget, Transaction, Account, TransactionCategory, TransactionTag
 
 # Register your models here.
 
+class TransactionInline(admin.TabularInline):
+    model = Transaction
+    extra = 0
+
+class BudgetAdmin(admin.ModelAdmin):
+    inlines = [TransactionInline]
+    list_display = ('name',)
+
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'amount', 'account', 'category', 'created_at', 'updated_at')
+    list_display = ('amount', 'account', 'category', 'created_at', 'updated_at')
     list_filter = ('category', 'created_at', 'account')
 
 class AccountAdmin(admin.ModelAdmin):
@@ -15,9 +23,10 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class TagAdmin(admin.ModelAdmin):
     list_display = ('name',)
- 
 
-admin.site.register(Transaction, TransactionAdmin)
+
+
 admin.site.register(Account, AccountAdmin)
 admin.site.register(TransactionCategory, CategoryAdmin)
 admin.site.register(TransactionTag, TagAdmin)
+admin.site.register(Budget, BudgetAdmin)

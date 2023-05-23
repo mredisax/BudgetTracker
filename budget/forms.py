@@ -1,5 +1,5 @@
 from django import forms
-from .models import Transaction, TransactionCategory, TransactionTag, Account
+from .models import Budget, Transaction, TransactionCategory, TransactionTag, Account
 
 class TransactionForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
@@ -11,7 +11,7 @@ class TransactionForm(forms.ModelForm):
 
     class Meta:
         model = Transaction
-        fields = ['name', 'category', 'amount','tags']
+        fields = ['name', 'budget', 'category', 'amount','tags']
         widgets = {'tags': forms.CheckboxSelectMultiple}
 
 
@@ -24,4 +24,9 @@ class TagForm(forms.ModelForm):
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = TransactionCategory
+        fields = ['name']
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Budget
         fields = ['name']
