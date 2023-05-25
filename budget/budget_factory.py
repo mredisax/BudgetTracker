@@ -1,9 +1,9 @@
 from .models import Budget, Transaction, Account, TransactionCategory, TransactionTag
 class BudgetFactory:
     def create_budget(self, budget_type, name):
-        if budget_type == "home":
+        if budget_type == "Home":
             return HomeBudget.objects.create(name=name)
-        elif budget_type == "company":
+        elif budget_type == "Company":
             return CompanyBudget.objects.create(name=name)
         else:
             raise ValueError("Invalid budget type")

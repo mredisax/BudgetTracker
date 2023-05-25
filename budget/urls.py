@@ -9,6 +9,7 @@ from .views import (
     TransactionDeleteView,
     TagCreateView,
     CategoryCreateView,
+    BudgetCreateView,
 )
 
 urlpatterns = [
@@ -21,5 +22,5 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('tag/add/', TagCreateView.as_view(), name='add_tag'),
     path('category/add/', CategoryCreateView.as_view(), name='add_category'),
-    path('budget/add/', CategoryCreateView.as_view(), name='add_category'),
+    path('budget/add/', BudgetCreateView.as_view(), name='add_budget'),
 ]
