@@ -13,8 +13,6 @@ class TransactionForm(forms.ModelForm):
         model = Transaction
         fields = ['name', 'budget', 'category', 'amount','tags']
         widgets = {'tags': forms.CheckboxSelectMultiple}
-
-
 class TagForm(forms.ModelForm):
     class Meta:
         model = TransactionTag
@@ -27,6 +25,11 @@ class CategoryForm(forms.ModelForm):
         fields = ['name']
 
 class BudgetForm(forms.ModelForm):
+    budget_type = forms.ChoiceField(choices=[('Home', 'Home Budget'), ('Company', 'Company Budget')])
+    def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data
+
     class Meta:
         model = Budget
-        fields = ['name']
+        fields = ['name', 'budget_type']

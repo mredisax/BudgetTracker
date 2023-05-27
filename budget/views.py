@@ -5,6 +5,7 @@ from django.views.decorators.http import require_POST
 from .models import Budget, Transaction, Account, TransactionCategory, TransactionTag
 from .forms import TransactionForm, TagForm, CategoryForm, BudgetForm
 from .statistics import Statistics
+from .budget_factory import HomeBudgetFactory, CompanyBudgetFactory
 from datetime import datetime
 
 class BudgetView(View):
@@ -63,7 +64,6 @@ class TransactionCreateView(View):
             print("valid")
             transaction = form.save(commit=False)
             transaction.account = account
-            print(transaction.account)
             transaction.save()
             form.save_m2m()
             return redirect('transaction_detail', pk=transaction.pk)
@@ -84,7 +84,6 @@ class TransactionEditView(View):
         form = TransactionForm(request.user, request.POST, instance=transaction)
         if form.is_valid():
             transaction = form.save(commit=False)
-            # transaction.owner = form.cleaned_data['account']
             transaction.category = form.cleaned_data['category']
             transaction.save()
             form.save_m2m()
@@ -111,6 +110,16 @@ class BudgetCreateView(View):
     def post(self, request):
         form = BudgetForm(request.POST)
         if form.is_valid():
+            budget_type = form.cleaned_data['budget_type']
+            name = form.cleaned_data['name']
+            if budget_type == 'Home':
+                factory = HomeBudgetFactory()
+            elif budget_type == 'Company':
+                factory = CompanyBudgetFactory()
+            else:
+                raise ValueError('Invalid budget type')
+
+            budget = factory.create_budget(name)
             form.save()
             return redirect('transaction_create')
         return render(request, self.template_name, {'form': form})

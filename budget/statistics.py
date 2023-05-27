@@ -11,8 +11,6 @@ def singleton(class_):
 
     return wrapper
 
-
-# Statistics class
 @singleton
 class Statistics:
     def __init__(self, transactions):

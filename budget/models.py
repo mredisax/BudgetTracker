@@ -7,6 +7,10 @@ class Budget(models.Model):
 
     def __str__(self):
         return self.name
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name'], name='unique_budget')
+        ]
 
 class Account(models.Model):
     name = models.CharField(max_length=255)
@@ -21,7 +25,6 @@ class Account(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class TransactionCategory(models.Model):
     name = models.CharField(max_length=255)
