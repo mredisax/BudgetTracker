@@ -1,0 +1,9 @@
+{% extends 'budget/header.html' %}
+
+{% block content %}
+<form method="POST" action="{% url 'add_budget' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Add</button>
+</form>
+{% endblock %}

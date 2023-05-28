@@ -1,0 +1,81 @@
+{% extends 'budget/header.html' %}
+
+{% block content %}
+  <div class="overflow-x-auto p-10 space-y-10 w-full">
+    <div class="stats shadow w-full">
+  
+      <div class="stat">
+        <div class="stat-title">Total Transactions cost</div>
+        <div class="stat-value text-primary">{{ total_amount }}</div>
+      </div>
+      
+      <div class="stat">
+        <div class="stat-title">Total per month</div>
+        <div class="stat-value text-secondary">{{ monthly_amounts }}</div>
+      </div>
+      
+      <div class="stat">
+          <div class="stat-title">Total per day</div>
+        <div class="stat-value">{{ daily_amounts }}</div>
+      </div>
+    </div>
+
+    <table class="table table-zebra w-full m-t-10">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Category</th>
+            <th>Budget Type</th>
+          <th>Tag</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for transaction in transactions %}
+        <!-- row 1 -->
+        <tr>
+          <th>{{ forloop.counter }}</th>
+          <td><a class="link link-primary" href="{% url 'transaction_detail' pk=transaction.pk %}">
+            {{ transaction.name }}
+            </a>
+          </td>
+          <td>{{ transaction.category }}</td>
+            <td>{{ transaction.budget }}</td>
+          <td>{% for tag in transaction.tags.all %}
+            <div class="badge badge-primary">{{ tag.name }}</div>
+            {% endfor %}
+          </td>
+          <td>{{ transaction.amount }}</td>
+        </tr>
+        
+        {% empty %}
+        <tr>
+          <th>1</th>
+          <td>0.00</td>
+            <td>None</td>
+          <td>None</td>
+          <td>None</td>
+          <td>None</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <th></th>
+          <td></td>
+          <td></td>
+            <td></td>
+          <td></td>
+          <td>
+            <button class="btn bg-success">
+              <a href="{% url 'transaction_create' %}">Add</a>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+{% endblock %}
+

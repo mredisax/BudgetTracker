@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}My App{% endblock %}</title>
+    <!--Import Google Icon Font-->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.6/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% load static %}
+    <script src="{% static 'talwind.config.js' %}"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+  <div class="navbar bg-base-100 bg-neutral">
+    <div class="flex-1">
+      <a href="/" class="btn btn normal-case text-xl">BudgetTracker</a>
+    </div>
+    <div class="flex-none gap-2">
+      <div class="form-control text-info">
+        {% if user.is_authenticated %}
+        {{ user.username }}
+        {% endif %}
+      </div>
+      <div class="dropdown dropdown-end">
+        <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+          <div class="w-10 rounded-full">
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" />
+          </div>
+        </label>
+        <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
+            <li><a href="{% url 'add_budget' %}">Add New Budget</a></li>
+            <li><a href="{% url 'add_tag' %}">Add New Tag</a></li>
+            <li><a href="{% url 'add_category' %}">Add New Category</a></li>
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col w-full h-screen	border-opacity-50 items-center">
+        {% block content %}{% endblock %}
+    </div>
+  </div>
+</body>
+</html>

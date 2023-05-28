@@ -1,0 +1,18 @@
+{% extends 'budget/header.html' %}
+
+{% block content %}
+  <div class="card shadow-xl w-1/2 justify-center">
+    <div class="card-body">
+      <h2 class="card-title">{{ transaction }}</h2>
+      <p>Amount: {{ transaction.amount }}</p>
+      <p>Category: {{ transaction.category }}</p>
+      <p>Tags: {% for tag in transaction.tags.all %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+      
+      <div class="card-actions flex flex-nowrap justify-center">
+        <a class="btn btn-primary" href="{% url 'transaction_edit' pk=transaction.pk %}">Edit this transaction</a>
+        <a class="btn btn-primary" href="{% url 'transaction_delete' pk=transaction.pk %}">Delete this transaction</a>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}
